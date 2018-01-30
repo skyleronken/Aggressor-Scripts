@@ -1,5 +1,4 @@
-# Actions in this kit center around endpoint privilege escalation. Actions that involve forceful scanning (powerup.ps1, unix-privesc-check) should go in the apporiate section
-# @Und3rf10w
+# surveying of powershell on targets
 
 popup beacon_bottom {
 	menu "Survey" {
