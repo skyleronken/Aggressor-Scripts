@@ -1,0 +1,33 @@
+# Actions in this kit center around endpoint privilege escalation. Actions that involve forceful scanning (powerup.ps1, unix-privesc-check) should go in the apporiate section
+# @Und3rf10w
+
+popup beacon_bottom {
+	menu "Survey" {
+		item "Check PowerShell Engines"{
+			local('$bid');
+			foreach $bid ($1){
+				binput($bid, "Check Powershell Engines");
+				bpowershell($bid, "(Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\PowerShell\\*\\PowerShellEngine -Name PowerShellVersion).PowerShellVersion");
+			}
+		}
+                item "Check CLR Versions"{
+			local('$bid');
+                        foreach $bid ($1){
+                                binput($bid, "Check CLR Versions");
+				bpowershell($bid, "(Test-Path \$env:windir\\Microsoft.Net\\Framework\\v2.0.50727\\System.dll)");
+                                bpowershell($bid, "(Test-Path \$env:windir\\Microsoft.Net\\Framework\\v4.0.30319\\System.dll)");
+                        }
+	
+		}
+                item "Check PowerShell Logging"{
+			local('$bid');
+                        foreach $bid ($1){
+                                binput($bid, "Check PowerShell Logging");
+                                bpowershell($bid, "[Bool](Get-ItemProperty 'HKLM:\\SOFTWARE\\Wow6432Node\\Policies\\Microsoft\\Windows\\PowerShell\\Transcription' -ErrorAction SilentlyContinue).EnableTranscripting");
+				bpowershell($bid, "[Bool](Get-ItemProperty 'HKLM:\\SOFTWARE\\Wow6432Node\\Policies\\Microsoft\\Windows\\Power Shell\\ModuleLogging' -ErrorAction SilentlyContinue).EnableModuleLogging");
+				bpowershell($bid, "[Bool](Get-ItemProperty 'HKLM:\\SOFTWARE\\Wow6432Node\\Policies\\Microsoft\\Windows\\Power Shell\\ScriptBlockLogging' -ErrorAction SilentlyContinue).EnableScriptBlockLogging");
+                        }
+
+		}
+	}
+}
